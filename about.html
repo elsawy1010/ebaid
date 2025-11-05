@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>عن الشركة | عبيد - EBAID</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <link rel="icon" href="assets/images/logo.png" type="image/png">
+
+  <style>
+    :root {
+      --primary: #6b8e23;
+      --secondary: #3f4d13;
+      --light: #fff;
+      --dark: #1b1b1b;
+      --gray: #777;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --radius: 14px;
+      --transition: all 0.3s ease;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Cairo', sans-serif; background: #fafaf8; color: #222; line-height: 1.7; }
+
+    .container { width: min(95%, 1200px); margin-inline: auto; }
+
+    /* ===== HEADER ===== */
+    .site-header {
+      position: sticky; top: 0; background: var(--light);
+      box-shadow: var(--shadow); z-index: 999;
+    }
+
+    .header-inner {
+      display: flex; justify-content: space-between;
+      align-items: center; padding: 0.7rem 0;
+    }
+
+    .logo { display: flex; align-items: center; gap: .5rem; text-decoration: none; color: var(--dark); font-weight: 700; font-size: 1.3rem; }
+    .logo img { width: 50px; height: 50px; object-fit: contain; }
+
+    .main-nav ul { list-style: none; display: flex; gap: 2rem; }
+    .main-nav a { text-decoration: none; color: var(--dark); font-weight: 600; transition: var(--transition); }
+    .main-nav a:hover, .main-nav a.active { color: var(--primary); }
+
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
+    .nav-toggle span { width: 26px; height: 3px; background: var(--dark); border-radius: 2px; transition: var(--transition); }
+    .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translateY(8px); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translateY(-8px); }
+
+    @media (max-width: 768px) {
+      .main-nav { position: absolute; top: 70px; right: 0; width: 100%; background: var(--light); display: none; flex-direction: column; text-align: center; border-top: 1px solid #ddd; }
+      .main-nav.active { display: flex; }
+      .main-nav ul { flex-direction: column; gap: 1rem; padding: 1rem 0; }
+      .nav-toggle { display: flex; }
+    }
+
+    /* ===== PAGE HEADER ===== */
+    .page-header { background: #f4f8f5; text-align: center; padding: 3rem 1rem; }
+    .page-header h1 { color: var(--primary); font-size: 2.2rem; margin-bottom: 0.5rem; }
+    .page-header p { color: var(--gray); font-size: 1.1rem; }
+
+    /* ===== ABOUT SECTION ===== */
+    .about-page { padding: 3rem 1rem; }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
+    .about-text h2 { color: var(--primary); margin-bottom: 1rem; }
+    .about-text h3 { margin-top: 1.5rem; color: var(--primary); }
+    .about-actions { margin-top: 1.5rem; }
+    .btn { display: inline-block; background: var(--primary); color: var(--light); padding: 0.8rem 1.4rem; border-radius: var(--radius); text-decoration: none; transition: var(--transition); }
+    .btn:hover { background: var(--secondary); }
+    .about-image img { width: 100%; max-width: 600px; border-radius: 20px; box-shadow: 0 6px 20px rgba(0,0,0,0.1); height: auto; object-fit: cover; }
+
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; text-align: center; }
+      .about-image img { max-width: 90%; margin: 1rem auto; }
+    }
+
+    /* ===== VALUES ===== */
+    .values-section { background: #f8f9f8; padding: 3rem 1rem; text-align: center; }
+    .section-title { color: var(--primary); margin-bottom: 2rem; font-size: 1.8rem; }
+    .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+    .value-card { background: var(--light); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); transition: var(--transition); }
+    .value-card:hover { transform: translateY(-5px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+
+    /* ===== FOOTER ===== */
+    .site-footer { background: var(--secondary); color: var(--light); padding-top: 2rem; }
+    .footer-inner { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; padding-bottom: 1.5rem; }
+    .footer-col h4 { color: var(--light); margin-bottom: 0.8rem; }
+    .footer-col a { color: var(--light); text-decoration: none; display: block; margin: 0.4rem 0; transition: var(--transition); }
+    .footer-col a:hover { color: #d9e6af; }
+    .copyright { background: #111; padding: 1rem 0; text-align: center; font-size: 0.9rem; }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">
+        <img src="logo.png" alt="عبيد - EBAID">
+        <span class="brand-text">عبيد <small>EBAID</small></span>
+      </a>
+
+      <nav class="main-nav" id="mainNav">
+        <ul>
+          <li><a href="index.html">الرئيسية</a></li>
+          <li><a href="products.html">المنتجات</a></li>
+          <li><a href="about.html" class="active">عن الشركة</a></li>
+          <li><a href="contact.html">اتصل بنا</a></li>
+        </ul>
+      </nav>
+
+      <button class="nav-toggle" id="navToggle" aria-label="قائمة التنقل">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <section class="page-header">
+    <div class="container">
+      <h1>عن شركة عبيد</h1>
+      <p>منذ عام 1991 ونحن نقدم منتجات غذائية طبيعية تجمع بين الجودة والأصالة والطعم الفريد.</p>
+    </div>
+  </section>
+
+  <section class="about-page container">
+    <div class="about-grid">
+      <div class="about-text">
+        <h2>من نحن</h2>
+        <p>تأسست شركة <strong>عبيد</strong> عام 1991، وهي شركة مصرية رائدة في مجال الصناعات الغذائية، متخصصة في إنتاج الزيتون والمخللات وورق العنب والصلصة، بمذاق أصيل وجودة عالية.</p>
+
+        <h3>رؤيتنا</h3>
+        <p>أن نكون في مقدمة الشركات العالمية في تقديم منتجات غذائية طبيعية ذات طعم مميز وجودة عالية تلبي أذواق جميع المستهلكين حول العالم.</p>
+
+        <h3>رسالتنا</h3>
+        <p>نحرص على تقديم منتجات مصرية خالية من المبيدات وغير معدلة وراثيًا، باستخدام ثمار منتقاة من مزارعنا الخاصة لضمان الجودة والنكهة الأصلية التي تميز اسم <strong>عبيد</strong>.</p>
+
+        <div class="about-actions">
+          <a href="https://wa.me/201018814411?text=مرحبًا%20شركة%20عبيد،%20أرغب%20في%20التحدث%20معكم" target="_blank" class="btn">تواصل عبر واتساب</a>
+        </div>
+      </div>
+
+      <div class="about-image">
+        <img src="factory.jpeg" alt="فريق عمل عبيد" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section class="values-section">
+    <div class="container">
+      <h2 class="section-title">قيمنا</h2>
+      <div class="values-grid">
+        <div class="value-card">
+          <h3>الجودة أولاً</h3>
+          <p>نلتزم باستخدام أفضل المكونات وأحدث أساليب التصنيع لضمان منتج عالي الجودة في كل مرة.</p>
+        </div>
+        <div class="value-card">
+          <h3>الأصالة</h3>
+          <p>نحافظ على الطابع التقليدي والمذاق الأصيل الذي يميز منتجات عبيد منذ البداية.</p>
+        </div>
+        <div class="value-card">
+          <h3>الثقة</h3>
+          <p>نبني علاقات طويلة الأمد مع عملائنا من خلال الشفافية والالتزام والصدق.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-col">
+        <h4>عبيد</h4>
+        <p>منتجات زيتون ومخللات ومربيات وصناعة تقليدية بجودة عالية.</p>
+      </div>
+      <div class="footer-col">
+        <h4>روابط</h4>
+        <ul>
+          <li><a href="index.html">الرئيسية</a></li>
+          <li><a href="products.html">المنتجات</a></li>
+          <li><a href="about.html">عن الشركة</a></li>
+          <li><a href="contact.html">اتصل بنا</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>تواصل معنا</h4>
+        <p>الهاتف: 01018814411</p>
+        <p>البريد: info@ebaid.com</p>
+      </div>
+    </div>
+    <div class="copyright">
+      <div class="container">© <span id="year"></span> عبيد - EBAID. جميع الحقوق محفوظة.</div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("year").textContent = new Date().getFullYear();
+      const navToggle = document.getElementById("navToggle");
+      const mainNav = document.getElementById("mainNav");
+      navToggle.addEventListener("click", () => {
+        mainNav.classList.toggle("active");
+        navToggle.classList.toggle("open");
+      });
+    });
+  </script>
+</body>
+</html>

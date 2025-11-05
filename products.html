@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>منتجاتنا | عبيد - EBAID</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================
+       القواعد العامة
+    ============================ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: "Cairo", sans-serif; background-color: #fafaf8; color: #222; line-height: 1.7; }
+    html { scroll-behavior: smooth; }
+    :root {
+      --primary: #6b8e23; --secondary: #3f4d13; --light: #fff; --dark: #1b1b1b;
+      --gray: #777; --radius: 14px; --transition: all 0.3s ease;
+      --shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .container { width: min(95%, 1200px); margin-inline: auto; }
+
+    /* ============================
+       الهيدر
+    ============================ */
+    .site-header { position: sticky; top: 0; background: var(--light); box-shadow: var(--shadow); z-index: 999; }
+    .header-inner { display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 0; }
+    .logo { display: flex; align-items: center; gap: .5rem; text-decoration: none; color: var(--dark); }
+    .logo img { width: 50px; height: 50px; object-fit: contain; }
+    .brand-text { font-size: 1.3rem; font-weight: 700; }
+    .main-nav ul { list-style: none; display: flex; gap: 2rem; }
+    .main-nav a { text-decoration: none; color: var(--dark); font-weight: 600; transition: var(--transition); }
+    .main-nav a:hover, .main-nav a.active { color: var(--primary); }
+
+    .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; }
+    .nav-toggle span { width: 26px; height: 3px; background: var(--dark); border-radius: 2px; transition: var(--transition); }
+    .nav-toggle.open span:nth-child(1){ transform: rotate(45deg) translateY(8px); }
+    .nav-toggle.open span:nth-child(2){ opacity:0; }
+    .nav-toggle.open span:nth-child(3){ transform: rotate(-45deg) translateY(-8px); }
+
+    /* ============================
+       عنوان الصفحة
+    ============================ */
+    .page-header { background:#f4f4f2; text-align:center; padding:3rem 1rem; }
+    .page-header h1 { color:var(--secondary); font-size:2.2rem; margin-bottom:0.5rem; }
+    .page-header p { color:var(--gray); }
+
+    /* ============================
+       المنتجات
+    ============================ */
+    .products-section { padding:3rem 0; }
+    .products-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:1.5rem;
+    }
+    .product-card {
+      background:var(--light);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      transition:var(--transition);
+      cursor:pointer;
+    }
+    .product-card:hover { transform:translateY(-5px); box-shadow:0 8px 16px rgba(0,0,0,0.15); }
+    .card-media img { width:100%; height:200px; object-fit:cover; }
+    .card-body { padding:1rem; text-align:center; }
+    .product-name { font-size:1.1rem; font-weight:700; color:var(--dark); }
+
+    /* ============================
+       الفوتر
+    ============================ */
+    .site-footer { background: var(--secondary); color: var(--light); padding-top:2rem; margin-top:3rem; }
+    .footer-inner {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:1.5rem;
+    }
+    .footer-col h4 { margin-bottom:0.8rem; font-size:1.2rem; }
+    .footer-col a { color: var(--light); text-decoration:none; }
+    .footer-col a:hover { color:#d9e6af; }
+    .copyright { background:#333; padding:0.8rem 0; text-align:center; font-size:0.9rem; }
+
+    /* ============================
+       popup modal
+    ============================ */
+    .product-modal { display:none; position:fixed; inset:0; z-index:1000; }
+    .product-modal.active { display:block; }
+    .modal-backdrop { position:absolute; inset:0; background:rgba(0,0,0,0.55); backdrop-filter:blur(4px); }
+    .modal-panel {
+      position:relative; z-index:1010; background:var(--light);
+      width:min(90%,700px); margin:5% auto; border-radius:var(--radius);
+      box-shadow:var(--shadow); overflow:hidden; padding:1.5rem;
+    }
+    .modal-close {
+      position:absolute; top:10px; left:15px; font-size:1.8rem;
+      background:none; border:none; cursor:pointer; color:var(--dark);
+    }
+    .modal-grid { display:flex; flex-wrap:wrap; align-items:center; gap:1.5rem; }
+    .modal-media img { width:100%; max-width:300px; border-radius:var(--radius); }
+    .modal-content { flex:1; text-align:right; }
+    .modal-content h3 { color:var(--secondary); margin-bottom:0.5rem; }
+    .modal-desc { color:var(--gray); margin-bottom:1rem; line-height:1.8; }
+    .btn { display:inline-block; padding:0.7rem 1.4rem; border-radius:var(--radius);
+           text-decoration:none; font-weight:600; transition:var(--transition);}
+    .btn-outline { border:2px solid var(--primary); color:var(--primary); background:none; }
+    .btn-outline:hover { background:var(--primary); color:#fff; }
+
+    /* ============================
+       responsive
+    ============================ */
+    @media (max-width:768px){
+      .main-nav { position:absolute; top:70px; right:0; width:100%; background:var(--light);
+                  display:none; flex-direction:column; text-align:center; border-top:1px solid #ddd; }
+      .main-nav.active { display:flex; }
+      .main-nav ul { flex-direction:column; gap:1rem; padding:1rem 0; }
+      .nav-toggle { display:flex; }
+      .modal-grid { flex-direction:column; text-align:center; }
+      .modal-media img { max-width:100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">
+        <img src="logo.png" alt="عبيد - EBAID">
+        <span class="brand-text">عبيد <small>EBAID</small></span>
+      </a>
+      <nav class="main-nav" id="mainNav">
+        <ul>
+          <li><a href="index.html">الرئيسية</a></li>
+          <li><a href="products.html" class="active">المنتجات</a></li>
+          <li><a href="about.html">عن الشركة</a></li>
+          <li><a href="contact.html">اتصل بنا</a></li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="قائمة التنقل">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== PAGE HEADER ===== -->
+  <section class="page-header">
+    <div class="container">
+      <h1>منتجات عبيد</h1>
+      <p>استمتع بأفضل أنواع الزيتون والمخللات وورق العنب والصلصة.</p>
+    </div>
+  </section>
+
+  <!-- ===== PRODUCTS GRID ===== -->
+  <section class="products-section container">
+    <div class="products-grid">
+      <!-- منتجات (مأخوذة من الكود اللي بعته) -->
+      <article class="product-card" tabindex="0"
+               data-name="زيتون أخضر "
+               data-desc="زيتون طازج  بخليط من الأعشاب والتوابل، محفوظ بزيت زيتون نقي."
+               data-img="olives.jpg">
+        <div class="card-media">
+          <img src="olives.jpg" alt="زيتون أخضر ">
+        </div>
+        <div class="card-body">
+          <h3 class="product-name">زيتون أخضر</h3>
+        </div>
+      </article>
+
+      <article class="product-card" tabindex="0"
+               data-name="زيتون طبيعي"
+               data-desc="منتقى بعناية مخلل بالملح والخل"
+               data-img="n-olives.jpeg">
+        <div class="card-media">
+          <img src="n-olives.jpeg" alt="زيتون طبيعي">
+        </div>
+        <div class="card-body">
+          <h3 class="product-name">زيتون طبيعي</h3>
+        </div>
+      </article>
+
+      <article class="product-card" tabindex="0"
+               data-name="زيتون كالاماتا"
+               data-desc="منتقى بعناية مخلل بالملح والخل"
+               data-img="calamata-olives.jpeg">
+        <div class="card-media">
+          <img src="calamata-olives.jpeg" alt="زيتون كالاماتا">
+        </div>
+        <div class="card-body">
+          <h3 class="product-name">زيتون كالاماتا</h3>
+        </div>
+      </article>
+
+      <article class="product-card" tabindex="0"
+               data-name="زيتون شرائح أخضر"
+               data-desc="منتقى بعناية مخلل بالملح والخل
+يحفظ في مكان بارد وجاف بعيدا عن الضوء"
+               data-img="sliced_olives.jpeg">
+        <div class="card-media">
+          <img src="sliced_olives.jpeg" alt="زيتون شرائح أخضر">
+        </div>
+        <div class="card-body">
+          <h3 class="product-name">زيتون شرائح أخضر</h3>
+        </div>
+      </article>
+
+      <article class="product-card" tabindex="0"
+               data-name="سلطة زيتون"
+               data-desc="عبارة عن شرائح زيتون أخضر منتقى بعناية مخلل بالملح والخل مضاف إليه بهارات وتوابل وزيت زيتون عبيد فودز
+يحفظ في مكان بارد وجاف بعيدا عن الضوء"
+               data-img="salata-olives.jpeg">
+        <div class="card-media">
+          <img src="salata-olives.jpeg" alt="سلطة زيتون">
+        </div>
+        <div class="card-body">
+          <h3 class="product-name">سلطة زيتون</h3>
+        </div>
+      </article>
+
+      <article class="product-card" tabindex="0"
+               data-name="زيتون اخضر محشى جزر"
+               data-desc="منتقى بعناية مخلل بالملح والخل
+يحفظ في مكان بارد وجاف بعيدا عن الضوء"
+               data-img="blackolives.jpeg">
+        <div class="card-media">
+          <img src="gazar-olives.jpeg" alt="زيتون اخضر محشى جزر">
+        </div>
+        <div class="card-body">
+          <h3 class="product-name">زيتون اخضر محشى جزر</h3>
+        </div>
+      </article>
+
+      <article class="product-card" tabindex="0"
+               data-name="زيتون مشوي"
+               data-desc="عبارة عن ثمار زيتون عالية الجودة مخلل بالملح والخل
+يحفظ في مكان بارد وجاف بعيدا عن الضوء"
+               data-img="mash-olives.jpeg">
+        <div class="card-media">
+          <img src="mash-olives.jpeg" alt="زيتون مشوي">
+        </div>
+        <div class="card-body">
+          <h3 class="product-name">زيتون مشوي</h3>
+        </div>
+      </article>
+
+      <article class="product-card" tabindex="0"
+               data-name="باذنجان مكدوس"
+               data-desc="المكونات
+باذنجان ، مكسرات ، ملح ،خل، توابل"
+               data-img="bazengan.jpeg">
+        <div class="card-media">
+          <img src="bazengan.jpeg" alt="باذنجان مكدوس">
+        </div>
+        <div class="card-body">
+          <h3 class="product-name">باذنجان مكدوس</h3>
+        </div>
+      </article>
+
+      <article class="product-card" tabindex="0"
+               data-name="مخلل مشكل"
+               data-desc="المكونات
+ثمار عالية الجودة ،ملح ، خل
+يحفظ في مكان بارد وجاف بعيدا عن الضوء"
+               data-img="me-olives.jpeg">
+        <div class="card-media">
+          <img src="me-olives.jpeg" alt="مخلل مشكل">
+        </div>
+        <div class="card-body">
+          <h3 class="product-name">مخلل مشكل</h3>
+        </div>
+      </article>
+
+      <article class="product-card" tabindex="0"
+               data-name="ليمون اصفر معصفر"
+               data-desc="المكونات
+ ثمار ليمون عالية الجودة مخلل بالملح والخل مضاف إليه حبة البركة والتوابل"
+               data-img="m-olives.jpeg">
+        <div class="card-media">
+          <img src="m-olives.jpeg" alt="ليمون اصفر معصفر">
+        </div>
+        <div class="card-body">
+          <h3 class="product-name">ليمون اصفر معصفر</h3>
+        </div>
+      </article>
+
+      <article class="product-card" tabindex="0"
+               data-name="ورق عنب"
+               data-desc="لمكونات
+ورق عنب بناتى عالى الجودة ، ملح ،خل،ملح ليمون"
+               data-img="blackolives.jpeg">
+        <div class="card-media">
+          <img src="wark-enab.jpeg" alt="ورق عنب">
+        </div>
+        <div class="card-body">
+          <h3 class="product-name">ورق عنب</h3>
+        </div>
+      </article>
+
+      <article class="product-card" tabindex="0"
+               data-name="صلصة فريدة"
+               data-desc="المكونات معجون طماطم ،ملح"
+               data-img="salsa.jpeg">
+        <div class="card-media">
+          <img src="salsa.jpeg" alt="صلصة فريدة">
+        </div>
+        <div class="card-body">
+          <h3 class="product-name">صلصة فريدة</h3>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-col">
+        <h4>عبيد</h4>
+        <p>منتجات زيتون ومخللات ومربيات وصناعة تقليدية بجودة عالية.</p>
+      </div>
+      <div class="footer-col">
+        <h4>روابط</h4>
+        <ul>
+          <li><a href="index.html">الرئيسية</a></li>
+          <li><a href="products.html">المنتجات</a></li>
+          <li><a href="about.html">عن الشركة</a></li>
+          <li><a href="contact.html">اتصل بنا</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>تواصل معنا</h4>
+        <p>الهاتف: 01018814411</p>
+        <p>البريد: info@ebaid.com</p>
+      </div>
+    </div>
+    <div class="copyright">
+      <div class="container">© <span id="year"></span> عبيد - EBAID. جميع الحقوق محفوظة.</div>
+    </div>
+  </footer>
+
+  <!-- ===== PRODUCT POPUP ===== -->
+  <div class="product-modal" id="productModal">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-panel">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <div class="modal-grid">
+        <div class="modal-media"><img src="" alt="" id="modalImage"></div>
+        <div class="modal-content">
+          <h3 id="modalTitle">اسم المنتج</h3>
+          <p class="modal-desc" id="modalDesc">وصف المنتج</p>
+          <div class="modal-actions">
+            <button class="btn btn-outline" id="shareBtn">مشاركة</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // سنة الفوتر
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // القائمة الجانبية للموبايل
+    const navToggle = document.getElementById("navToggle");
+    const mainNav = document.getElementById("mainNav");
+    navToggle.addEventListener("click", () => {
+      mainNav.classList.toggle("active");
+      navToggle.classList.toggle("open");
+    });
+
+    // فتح popup المنتج
+    const cards = document.querySelectorAll(".product-card");
+    const modal = document.getElementById("productModal");
+    const modalImg = document.getElementById("modalImage");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDesc = document.getElementById("modalDesc");
+    const modalClose = document.getElementById("modalClose");
+    const backdrop = document.getElementById("modalBackdrop");
+
+    cards.forEach(card => {
+      card.addEventListener("click", () => {
+        modal.classList.add("active");
+        modalImg.src = card.dataset.img;
+        modalTitle.textContent = card.dataset.name;
+        modalDesc.textContent = card.dataset.desc;
+      });
+    });
+
+    [modalClose, backdrop].forEach(el => el.addEventListener("click", () => {
+      modal.classList.remove("active");
+    }));
+
+    // زر المشاركة
+    document.getElementById("shareBtn").addEventListener("click", () => {
+      if (navigator.share) {
+        navigator.share({
+          title: modalTitle.textContent,
+          text: modalDesc.textContent,
+          url: window.location.href
+        });
+      } else {
+        alert("المشاركة غير مدعومة في هذا المتصفح");
+      }
+    });
+  </script>
+</body>
+</html>

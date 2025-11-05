@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>عبيد - EBAID | زيتون، مخللات، ورق عنب، صلصة</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="logo.png" type="image/png">
+
+  <style>
+    /* ============================ القواعد العامة ============================ */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: "Cairo", sans-serif; background-color: #fafaf8; color: #222; line-height: 1.7; }
+
+    :root {
+      --primary: #6b8e23;
+      --secondary: #3f4d13;
+      --light: #fff;
+      --dark: #1b1b1b;
+      --gray: #777;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --radius: 14px;
+      --transition: all 0.3s ease;
+    }
+
+    .container { width: min(95%, 1200px); margin-inline: auto; }
+
+    /* ============================ الهيدر ============================ */
+    .site-header {
+      position: sticky; top: 0; background: var(--light);
+      box-shadow: var(--shadow); z-index: 999;
+    }
+
+    .header-inner {
+      display: flex; justify-content: space-between;
+      align-items: center; padding: 0.7rem 0;
+    }
+
+    .logo { display: flex; align-items: center; gap: .5rem; text-decoration: none; color: var(--dark); }
+    .logo img { width: 50px; height: 50px; object-fit: contain; }
+    .brand-text { font-size: 1.3rem; font-weight: 700; }
+
+    .main-nav ul { list-style: none; display: flex; gap: 2rem; }
+    .main-nav a { text-decoration: none; color: var(--dark); font-weight: 600; transition: var(--transition); }
+    .main-nav a:hover, .main-nav a.active { color: var(--primary); }
+
+    .nav-toggle {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer;
+    }
+
+    .nav-toggle span {
+      width: 26px; height: 3px; background: var(--dark);
+      border-radius: 2px; transition: var(--transition);
+    }
+
+    .nav-toggle.open span:nth-child(1) { transform: rotate(45deg) translateY(8px); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: rotate(-45deg) translateY(-8px); }
+
+    /* ============================ hero section ============================ */
+    .hero { padding: 80px 0; background-color: #fafafa; }
+    .hero-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 40px; flex-wrap: wrap;
+    }
+    .hero-text { flex: 1 1 45%; text-align: right; }
+    .hero-text h1 { font-size: 2.8rem; font-weight: 800; color: #2e3d24; margin-bottom: 20px; }
+    .hero-text p { font-size: 1.2rem; color: #444; line-height: 1.8; margin-bottom: 25px; }
+
+    .hero-visual { flex: 1 1 50%; display: flex; justify-content: center; align-items: center; }
+    .hero-visual img {
+      width: 100%; height: 500px; object-fit: cover;
+      border-radius: 20px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ============================ الأزرار ============================ */
+    .btn {
+      display: inline-block; padding: 0.7rem 1.4rem;
+      border-radius: var(--radius); text-decoration: none;
+      font-weight: 600; transition: var(--transition);
+    }
+    .btn-primary { background: var(--primary); color: var(--light); }
+    .btn-primary:hover { background: var(--secondary); }
+    .btn-outline { border: 2px solid var(--primary); color: var(--primary); }
+    .btn-outline:hover { background: var(--primary); color: var(--light); }
+
+    /* ============================ المنتجات ============================ */
+    .section-title { text-align: center; font-size: 2rem; margin-top: 2rem; color: var(--secondary); }
+    .products-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem; margin-top: 2rem;
+    }
+    .product-card {
+      background: var(--light); border-radius: var(--radius);
+      box-shadow: var(--shadow); overflow: hidden;
+      cursor: pointer; transition: var(--transition);
+    }
+    .product-card:hover { transform: translateY(-6px); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); }
+    .card-media img { width: 100%; height: 200px; object-fit: cover; }
+    .card-body { padding: 1rem; text-align: center; }
+    .product-name { font-size: 1.1rem; font-weight: 700; color: var(--dark); }
+
+    /* ============================ الفوتر ============================ */
+    .site-footer { background: var(--secondary); color: var(--light); padding-top: 2rem; margin-top: 3rem; }
+    .footer-inner { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; }
+    .footer-col h4 { margin-bottom: 0.8rem; font-size: 1.2rem; }
+    .footer-col a { color: var(--light); text-decoration: none; }
+    .footer-col a:hover { color: #d9e6af; }
+    .copyright { background: #333; padding: 0.8rem 0; text-align: center; font-size: 0.9rem; }
+
+    /* ============================ popup modal ============================ */
+    .product-modal { display: none; position: fixed; inset: 0; z-index: 1000; }
+    .product-modal.active { display: block; }
+    .modal-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.55); backdrop-filter: blur(4px); }
+    .modal-panel {
+      position: relative; z-index: 1010; background: var(--light);
+      width: min(90%, 700px); margin: 5% auto;
+      border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden;
+      padding: 1.5rem;
+    }
+    .modal-close {
+      position: absolute; top: 10px; left: 15px;
+      background: none; border: none; font-size: 2rem; cursor: pointer; color: var(--dark);
+    }
+
+    /* ============================ Responsive ============================ */
+    @media (max-width: 768px) {
+      .main-nav {
+        position: absolute; top: 70px; right: 0; width: 100%;
+        background: var(--light); display: none;
+        flex-direction: column; text-align: center; border-top: 1px solid #ddd;
+      }
+      .main-nav.active { display: flex; }
+      .main-nav ul { flex-direction: column; gap: 1rem; padding: 1rem 0; }
+      .nav-toggle { display: flex; }
+      .hero-text h1 { font-size: 2rem; }
+      .hero-visual img { height: 300px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="logo" href="index.html">
+        <img src="logo.png" alt="عبيد - EBAID">
+        <span class="brand-text">عبيد <small>EBAID</small></span>
+      </a>
+
+      <nav class="main-nav" id="mainNav">
+        <ul>
+          <li><a href="index.html" class="active">الرئيسية</a></li>
+          <li><a href="products.html">المنتجات</a></li>
+          <li><a href="about.html">عن الشركة</a></li>
+          <li><a href="contact.html">اتصل بنا</a></li>
+        </ul>
+      </nav>
+
+      <button class="nav-toggle" id="navToggle" aria-label="قائمة التنقل">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <h1>طعم أصيل من عبيد</h1>
+        <p>زيتون، مخللات، ورق عنب وصلصة مصنوعة بحب وبمكونات طبيعية.</p>
+        <div class="hero-cta">
+          <a href="products.html" class="btn btn-primary">منتجاتنا</a>
+          <a href="about.html" class="btn btn-outline">تعرف علينا</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img src="olives_hero.jpg" alt="منتجات عبيد" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURED PRODUCTS ===== -->
+  <section class="featured container">
+    <h2 class="section-title">منتجات مميزة</h2>
+    <div class="products-grid">
+      <article class="product-card" data-name="زيتون مشوي" data-price="110 جنيه" data-desc="زيتون عالي الجودة..." data-img="blackolives.jpeg">
+        <div class="card-media"><img src="mash-olives.jpeg" alt=""></div>
+        <div class="card-body"><h3 class="product-name">زيتون مشوي</h3></div>
+      </article>
+      <article class="product-card" data-name="سلطة زيتون" data-price="110 جنيه" data-desc="شرائح زيتون مخللة..." data-img="blackolives.jpeg">
+        <div class="card-media"><img src="salata-olives.jpeg" alt=""></div>
+        <div class="card-body"><h3 class="product-name">سلطة زيتون</h3></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-col">
+        <h4>عبيد</h4>
+        <p>منتجات زيتون ومخللات ومربيات بجودة عالية.</p>
+      </div>
+      <div class="footer-col">
+        <h4>روابط</h4>
+        <ul>
+          <li><a href="index.html">الرئيسية</a></li>
+          <li><a href="products.html">المنتجات</a></li>
+          <li><a href="about.html">عن الشركة</a></li>
+          <li><a href="contact.html">اتصل بنا</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>تواصل معنا</h4>
+        <p>الهاتف: 01018814411</p>
+        <p>البريد: info@ebaid.com</p>
+      </div>
+    </div>
+    <div class="copyright">
+      <div class="container">© <span id="year"></span> عبيد - EBAID. جميع الحقوق محفوظة.</div>
+    </div>
+  </footer>
+
+  <!-- ===== PRODUCT MODAL ===== -->
+  <div class="product-modal" id="productModal">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-panel">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <img id="modalImage" src="" alt="">
+      <h3 id="modalTitle"></h3>
+      <p id="modalPrice"></p>
+      <p id="modalDesc"></p>
+      <button id="shareBtn" class="btn btn-outline">مشاركة</button>
+    </div>
+  </div>
+
+  <script>
+    // ======================= الجافاسكربت الكامل =======================
+    document.addEventListener("DOMContentLoaded", function () {
+      // قائمة الموبايل
+      const navToggle = document.getElementById("navToggle");
+      const mainNav = document.getElementById("mainNav");
+      navToggle.addEventListener("click", () => {
+        mainNav.classList.toggle("active");
+        navToggle.classList.toggle("open");
+      });
+
+      // تحديث السنة
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // فتح/إغلاق الـ modal
+      const cards = document.querySelectorAll(".product-card");
+      const modal = document.getElementById("productModal");
+      const modalImage = document.getElementById("modalImage");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalPrice = document.getElementById("modalPrice");
+      const modalDesc = document.getElementById("modalDesc");
+      const modalClose = document.getElementById("modalClose");
+      const modalBackdrop = document.getElementById("modalBackdrop");
+
+      cards.forEach(card => {
+        card.addEventListener("click", () => {
+          modal.classList.add("active");
+          modalImage.src = card.dataset.img;
+          modalTitle.textContent = card.dataset.name;
+          modalPrice.textContent = card.dataset.price;
+          modalDesc.textContent = card.dataset.desc;
+          document.body.style.overflow = "hidden";
+        });
+      });
+
+      function closeModal() {
+        modal.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+
+      modalClose.addEventListener("click", closeModal);
+      modalBackdrop.addEventListener("click", closeModal);
+
+      // مشاركة المنتج
+      const shareBtn = document.getElementById("shareBtn");
+      shareBtn.addEventListener("click", () => {
+        const title = modalTitle.textContent;
+        const text = `منتج ${title} من عبيد - ${modalPrice.textContent}`;
+        const url = window.location.href;
+        if (navigator.share) {
+          navigator.share({ title, text, url });
+        } else {
+          alert("خاصية المشاركة غير مدعومة في هذا المتصفح.");
+        }
+      });
+    });
+  </script>
+</body>
+</html>

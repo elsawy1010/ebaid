@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>اتصل بنا | عبيد - EBAID</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <link rel="icon" href="assets/images/logo.png" type="image/png">
+
+  <style>
+    :root {
+      --primary: #6b8e23;
+      --secondary: #3f4d13;
+      --light: #fff;
+      --dark: #1b1b1b;
+      --gray: #777;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      --radius: 14px;
+      --transition: all 0.3s ease;
+      --container: min(95%, 1200px);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Cairo', sans-serif; background: #fff; color: var(--dark); line-height: 1.8; }
+
+    .container { width: var(--container); margin-inline: auto; }
+
+    /* ===== HEADER ===== */
+    .site-header {
+      background: var(--light);
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 0;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: #000;
+      font-weight: 700;
+      font-size: 1.3rem;
+    }
+
+    .logo img {
+      width: 45px;
+      height: 45px;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .main-nav ul {
+      display: flex;
+      gap: 20px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .main-nav a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .main-nav a:hover,
+    .main-nav a.active {
+      color: var(--primary);
+    }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    .nav-toggle span {
+      width: 25px;
+      height: 3px;
+      background: #333;
+      transition: 0.3s;
+    }
+
+    .nav-toggle.open span:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .nav-toggle.open span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .nav-toggle.open span:nth-child(3) {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    @media (max-width: 768px) {
+      .main-nav {
+        display: none;
+        position: absolute;
+        top: 70px;
+        right: 0;
+        width: 100%;
+        background: var(--light);
+        border-top: 1px solid #eee;
+        text-align: center;
+      }
+
+      .main-nav.active {
+        display: block;
+      }
+
+      .main-nav ul {
+        flex-direction: column;
+        padding: 1rem 0;
+      }
+
+      .nav-toggle {
+        display: flex;
+      }
+    }
+
+    /* ===== PAGE HEADER ===== */
+    .page-header {
+      background: #f4f8f5;
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+
+    .page-header h1 {
+      color: var(--primary);
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .page-header p {
+      color: var(--gray);
+      font-size: 1.1rem;
+    }
+
+    /* ===== CONTACT SECTION ===== */
+    .contact-section {
+      padding: 3rem 1rem 6rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .contact-info {
+      background: var(--light);
+      padding: 2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .contact-info h2 {
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .contact-info p {
+      color: var(--gray);
+      margin-bottom: 1rem;
+    }
+
+    .contact-list {
+      list-style: none;
+      color: var(--secondary);
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-list li {
+      margin-bottom: 8px;
+    }
+
+    .contact-list a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .contact-list a:hover {
+      text-decoration: underline;
+    }
+
+    .contact-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.8rem 1.2rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-primary { background: var(--primary); color: var(--light); }
+    .btn-primary:hover { background: var(--secondary); }
+    .btn-outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); }
+    .btn-outline:hover { background: var(--primary); color: #fff; }
+
+    .contact-map {
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      height: 100%;
+    }
+
+    .contact-map iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 420px;
+      border: 0;
+    }
+
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .contact-map iframe { min-height: 350px; }
+    }
+
+    /* ===== FOOTER ===== */
+    .site-footer {
+      background: var(--secondary);
+      color: #ddd;
+      padding-top: 2rem;
+    }
+
+    .footer-inner {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      padding-bottom: 1.5rem;
+    }
+
+    .footer-col h4 {
+      color: #fff;
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-col a,
+    .footer-col p { color: #ddd; text-decoration: none; margin: 0.4rem 0; display: block; }
+    .footer-col a:hover { color: #80c080; }
+
+    .copyright {
+      background: #111;
+      padding: 1rem 0;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="عبيد">
+        <span class="brand-text">عبيد <small>EBAID</small></span>
+      </a>
+
+      <nav class="main-nav" id="mainNav">
+        <ul>
+          <li><a href="index.html">الرئيسية</a></li>
+          <li><a href="products.html">المنتجات</a></li>
+          <li><a href="about.html">عن الشركة</a></li>
+          <li><a href="contact.html" class="active">اتصل بنا</a></li>
+        </ul>
+      </nav>
+
+      <button class="nav-toggle" id="navToggle" aria-label="قائمة التنقل">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- PAGE HEADER -->
+  <section class="page-header">
+    <div class="container">
+      <h1>تواصل معنا</h1>
+      <p>يسعدنا دائمًا تواصلك معنا لأي استفسار أو طلب.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <main class="contact-section">
+    <div class="container contact-grid">
+      <div class="contact-info">
+        <h2>معلومات الاتصال</h2>
+        <p>متواجدون لخدمتك طوال أيام الأسبوع من الساعة 9 صباحًا حتى 9 مساءً.</p>
+
+        <ul class="contact-list">
+          <li><strong>العنوان:</strong> ١٢ شارع المصنع – مدينة العبور – القاهرة</li>
+          <li><strong>الهاتف:</strong> <a href="tel:+201287318086">01287318086</a> / <a href="tel:+201018814411">01018814411</a></li>
+          <li><strong>البريد الإلكتروني:</strong> <a href="mailto:info@ebaid.com">info@ebaid.com</a></li>
+        </ul>
+
+        <div class="contact-actions">
+          <a class="btn btn-primary" href="https://wa.me/201018814411?text=مرحبًا%20شركة%20عبيد،%20أرغب%20في%20الاستفسار%20عن%20منتجاتكم" target="_blank">تواصل عبر واتساب</a>
+          <a class="btn btn-outline" href="https://www.facebook.com/ebaid" target="_blank">تابعنا على فيسبوك</a>
+        </div>
+      </div>
+
+      <div class="contact-map">
+        <iframe src="https://www.google.com/maps?q=30.2229,31.4697&z=15&output=embed" loading="lazy" allowfullscreen></iframe>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-col">
+        <h4>عبيد</h4>
+        <p>منتجات زيتون ومخللات ومربيات وصناعة تقليدية بجودة عالية.</p>
+      </div>
+      <div class="footer-col">
+        <h4>روابط</h4>
+        <ul>
+          <li><a href="index.html">الرئيسية</a></li>
+          <li><a href="products.html">المنتجات</a></li>
+          <li><a href="about.html">عن الشركة</a></li>
+          <li><a href="contact.html">اتصل بنا</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>تواصل معنا</h4>
+        <p>الهاتف: 01018814411</p>
+        <p>البريد: info@ebaid.com</p>
+      </div>
+    </div>
+    <div class="copyright">
+      © <span id="year"></span> عبيد - EBAID. جميع الحقوق محفوظة.
+    </div>
+  </footer>
+
+  <script>
+    const navToggle = document.getElementById("navToggle");
+    const mainNav = document.getElementById("mainNav");
+    navToggle.addEventListener("click", () => {
+      navToggle.classList.toggle("open");
+      mainNav.classList.toggle("active");
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
